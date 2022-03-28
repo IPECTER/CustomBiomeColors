@@ -8,6 +8,7 @@ import me.arthed.custombiomecolors.nms.NmsServer;
 import me.arthed.custombiomecolors.nms.NmsServer_1_16;
 import me.arthed.custombiomecolors.nms.NmsServer_1_17;
 import me.arthed.custombiomecolors.nms.NmsServer_1_18;
+import me.arthed.custombiomecolors.nms.NmsServer_1_18_2;
 import me.arthed.custombiomecolors.utils.BStats;
 import me.arthed.custombiomecolors.utils.Updater;
 import me.arthed.custombiomecolors.utils.objects.BiomeColorType;
@@ -57,7 +58,11 @@ public final class CustomBiomeColors extends JavaPlugin {
         } else if(Bukkit.getVersion().contains("1.17")) {
             this.nmsServer = new NmsServer_1_17();
         } else if(Bukkit.getVersion().contains("1.18")) {
-            this.nmsServer = new NmsServer_1_18();
+            if(Bukkit.getVersion().contains("1.18.2")){
+                this.nmsServer = new NmsServer_1_18_2();
+            } else {
+                this.nmsServer = new NmsServer_1_18();
+            }
         } else {
             Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l[CustomBiomeColors] This plugin works only on 1.16 and higher versions."));
             Bukkit.getPluginManager().disablePlugin(this);
