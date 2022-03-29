@@ -4,6 +4,7 @@ import com.mojang.serialization.Lifecycle;
 import me.arthed.custombiomecolors.utils.objects.BiomeColors;
 import me.arthed.custombiomecolors.utils.objects.BiomeKey;
 import net.minecraft.core.BlockPosition;
+import net.minecraft.core.Holder;
 import net.minecraft.core.IRegistry;
 import net.minecraft.core.IRegistryWritable;
 import net.minecraft.resources.MinecraftKey;
@@ -100,7 +101,7 @@ public class NmsServer_1_18_2 implements NmsServer {
 
         net.minecraft.world.level.chunk.Chunk chunk = nmsWorld.l(blockPosition);
         if (chunk != null) {
-            chunk.setBiome(block.getX() >> 2, block.getY() >> 2, block.getZ() >> 2, (BiomeBase) nmsBiome.getBiomeBase());
+            chunk.setBiome(block.getX() >> 2, block.getY() >> 2, block.getZ() >> 2, Holder.a((BiomeBase) nmsBiome.getBiomeBase()));
         }
     }
 
@@ -121,7 +122,7 @@ public class NmsServer_1_18_2 implements NmsServer {
 
     @Override
     public void registerBiome(Object biomeBase, Object biomeMinecraftKey) {
-        this.biomeRegistry.a((ResourceKey<BiomeBase>) biomeMinecraftKey, (BiomeBase) biomeBase);
+        this.biomeRegistry.a(biomeRegistry, (ResourceKey<BiomeBase>) biomeMinecraftKey, (BiomeBase) biomeBase);
     }
 
 }

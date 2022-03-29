@@ -1,9 +1,11 @@
 plugins {
+    id 'java'
     id 'application'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 group = 'me.arthed'
-version = '1.0.2'
+version = '1.1.0'
 
 repositories {
     mavenCentral()
@@ -13,7 +15,7 @@ repositories {
         url = 'https://maven.enginehub.org/repo/'
     }
 }
-
+mainClassName = '...'
 dependencies {
     implementation 'org.jetbrains:annotations:16.0.2'
     implementation project(':utils')
