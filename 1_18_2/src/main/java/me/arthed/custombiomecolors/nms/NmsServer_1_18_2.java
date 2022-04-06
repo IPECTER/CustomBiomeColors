@@ -15,6 +15,7 @@ import net.minecraft.world.level.biome.BiomeFog;
 import net.minecraft.world.level.biome.BiomeSettingsGeneration;
 import net.minecraft.world.level.biome.BiomeSettingsMobs;
 import org.bukkit.Bukkit;
+import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_18_R2.CraftServer;
 import org.bukkit.craftbukkit.v1_18_R2.CraftWorld;
@@ -73,7 +74,7 @@ public class NmsServer_1_18_2 implements NmsServer {
         customBiomeBuilder.a(0.2F);
         customBiomeBuilder.b(0.05F);
         customBiomeBuilder.a(BiomeBase.TemperatureModifier.a);
-
+        customBiomeBuilder.a(BiomeBase.Geography.a);
         BiomeFog.a customBiomeColors = new BiomeFog.a();
         customBiomeColors.a(BiomeFog.GrassColor.a);
 
