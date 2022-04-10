@@ -53,7 +53,7 @@ public class NmsServer_1_18_2 implements NmsServer {
                 IRegistry.aP,
                 new MinecraftKey("minecraft", "plains")
         ));
-        ResourceKey<BiomeBase> customBiomeKey = ResourceKey.a(IRegistry.aP, new MinecraftKey(biomeKey.key, biomeKey.value));
+        ResourceKey<BiomeBase> customBiomeKey = ResourceKey.a(IRegistry.aP, new MinecraftKey(new MinecraftKey("cbc", biomeKey.value).a(), biomeKey.value));
         BiomeBase.a customBiomeBuilder = new BiomeBase.a();
 
         customBiomeBuilder.a(biomeBase.a());
@@ -73,7 +73,7 @@ public class NmsServer_1_18_2 implements NmsServer {
         }
         customBiomeBuilder.a(0.2F);
         customBiomeBuilder.b(0.05F);
-        customBiomeBuilder.a(BiomeBase.TemperatureModifier.a);
+        customBiomeBuilder.a(biomeBase.c());
         customBiomeBuilder.a(BiomeBase.Geography.a);
         BiomeFog.a customBiomeColors = new BiomeFog.a();
         customBiomeColors.a(BiomeFog.GrassColor.a);
@@ -116,7 +116,7 @@ public class NmsServer_1_18_2 implements NmsServer {
             return chunk.getNoiseBiome(
                     block.getX() >> 2,
                     block.getY() >> 2,
-                    block.getZ() >> 2);
+                    block.getZ() >> 2).a();
         }
         return null;
     }
