@@ -53,7 +53,7 @@ public class NmsServer_1_18_2 implements NmsServer {
                 IRegistry.aP,
                 new MinecraftKey("minecraft", "plains")
         ));
-        ResourceKey<BiomeBase> customBiomeKey = ResourceKey.a(IRegistry.aP, new MinecraftKey(new MinecraftKey("cbc", biomeKey.value).a(), biomeKey.value));
+        ResourceKey<BiomeBase> customBiomeKey = ResourceKey.a(IRegistry.aP, new MinecraftKey(biomeKey.key, biomeKey.value));
         BiomeBase.a customBiomeBuilder = new BiomeBase.a();
 
         customBiomeBuilder.a(biomeBase.a());
