@@ -24,7 +24,7 @@ import java.lang.reflect.Field;
 
 public class NmsServer_1_18_2 implements NmsServer {
 
-    private final IRegistry<BiomeBase> biomeRegistry = ((CraftServer) Bukkit.getServer()).getServer().Q.b(IRegistry.aP);
+    private final IRegistry<BiomeBase> biomeRegistry = ((CraftServer) Bukkit.getServer()).getServer().aU().d(IRegistry.aP);
 
     @Override
     public NmsBiome getBiomeFromBiomeKey(BiomeKey biomeKey) {
