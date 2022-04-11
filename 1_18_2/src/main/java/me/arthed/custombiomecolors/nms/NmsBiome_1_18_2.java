@@ -4,12 +4,15 @@ import me.arthed.custombiomecolors.utils.ReflectionUtils;
 import me.arthed.custombiomecolors.utils.objects.BiomeColors;
 import me.arthed.custombiomecolors.utils.objects.BiomeKey;
 import net.minecraft.core.IRegistry;
+import net.minecraft.core.IRegistryCustom;
 import net.minecraft.resources.MinecraftKey;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.BiomeBase;
 import net.minecraft.world.level.biome.BiomeFog;
 import net.minecraft.world.level.biome.BiomeSettingsGeneration;
 import net.minecraft.world.level.biome.BiomeSettingsMobs;
+import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_18_R2.CraftServer;
 
 import java.lang.reflect.Field;
 
@@ -30,6 +33,7 @@ public class NmsBiome_1_18_2 implements NmsBiome {
         try {
             BiomeFog biomeFog = (BiomeFog) ReflectionUtils.getPrivateObject(this.biomeBase, "m");
             assert biomeFog != null;
+
             return new BiomeColors()
                     .setGrassColor(ReflectionUtils.getPrivateOptionalInteger(biomeFog, "g"))
                     .setFoliageColor(ReflectionUtils.getPrivateOptionalInteger(biomeFog, "f"))
@@ -37,6 +41,7 @@ public class NmsBiome_1_18_2 implements NmsBiome {
                     .setWaterFogColor(ReflectionUtils.getPrivateInteger(biomeFog, "d"))
                     .setSkyColor(ReflectionUtils.getPrivateInteger(biomeFog, "e"))
                     .setFogColor(ReflectionUtils.getPrivateInteger(biomeFog, "b"));
+
         } catch(NoSuchFieldException exception) {
             exception.printStackTrace();
         }

@@ -6,19 +6,27 @@ import me.arthed.custombiomecolors.utils.objects.BiomeKey;
 import net.minecraft.core.BlockPosition;
 import net.minecraft.core.IRegistry;
 import net.minecraft.core.IRegistryWritable;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientboundLevelChunkWithLightPacket;
 import net.minecraft.resources.MinecraftKey;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.EntityPlayer;
+import net.minecraft.server.network.PlayerConnection;
 import net.minecraft.world.level.World;
 import net.minecraft.world.level.biome.BiomeBase;
 import net.minecraft.world.level.biome.BiomeFog;
 import net.minecraft.world.level.biome.BiomeSettingsGeneration;
 import net.minecraft.world.level.biome.BiomeSettingsMobs;
+import net.minecraft.world.level.chunk.Chunk;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_18_R1.CraftServer;
 import org.bukkit.craftbukkit.v1_18_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_18_R1.entity.CraftPlayer;
+import org.bukkit.entity.Player;
 
 import java.lang.reflect.Field;
+import java.util.BitSet;
 
 public class NmsServer_1_18 implements NmsServer {
 
@@ -97,7 +105,6 @@ public class NmsServer_1_18 implements NmsServer {
     public void setBlocksBiome(Block block, NmsBiome nmsBiome) {
         BlockPosition blockPosition = new BlockPosition(block.getX(), block.getY(), block.getZ());
         World nmsWorld = ((CraftWorld) block.getWorld()).getHandle();
-
         net.minecraft.world.level.chunk.Chunk chunk = nmsWorld.l(blockPosition);
         if (chunk != null) {
             chunk.setBiome(block.getX() >> 2, block.getY() >> 2, block.getZ() >> 2, (BiomeBase) nmsBiome.getBiomeBase());

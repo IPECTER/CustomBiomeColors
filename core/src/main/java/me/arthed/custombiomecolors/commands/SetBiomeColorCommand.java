@@ -50,7 +50,6 @@ public class SetBiomeColorCommand implements CommandExecutor, TabExecutor {
 
                 Runnable runWhenDone = () -> {
                     sender.sendMessage(ChatColor.GREEN + "Biome color was changed for approximately " + blocks.length + " blocks.");
-                    sender.sendMessage(ChatColor.GREEN + "You must re-join to see the changes.");
                 };
 
                 if(args.length > 1) {

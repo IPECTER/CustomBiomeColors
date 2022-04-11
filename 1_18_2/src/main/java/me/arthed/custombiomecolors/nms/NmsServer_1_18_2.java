@@ -3,22 +3,27 @@ package me.arthed.custombiomecolors.nms;
 import com.mojang.serialization.Lifecycle;
 import me.arthed.custombiomecolors.utils.objects.BiomeColors;
 import me.arthed.custombiomecolors.utils.objects.BiomeKey;
-import net.minecraft.core.BlockPosition;
-import net.minecraft.core.Holder;
-import net.minecraft.core.IRegistry;
-import net.minecraft.core.IRegistryWritable;
+import net.minecraft.core.*;
+import net.minecraft.network.protocol.game.ClientboundLevelChunkWithLightPacket;
 import net.minecraft.resources.MinecraftKey;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.EntityPlayer;
+import net.minecraft.server.network.PlayerConnection;
+import net.minecraft.server.network.ServerConnection;
+import net.minecraft.server.network.ServerPlayerConnection;
 import net.minecraft.world.level.World;
 import net.minecraft.world.level.biome.BiomeBase;
 import net.minecraft.world.level.biome.BiomeFog;
 import net.minecraft.world.level.biome.BiomeSettingsGeneration;
 import net.minecraft.world.level.biome.BiomeSettingsMobs;
+import net.minecraft.world.level.chunk.Chunk;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_18_R2.CraftServer;
 import org.bukkit.craftbukkit.v1_18_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_18_R2.entity.CraftPlayer;
+import org.bukkit.entity.Player;
 
 import java.lang.reflect.Field;
 
@@ -99,10 +104,26 @@ public class NmsServer_1_18_2 implements NmsServer {
     public void setBlocksBiome(Block block, NmsBiome nmsBiome) {
         BlockPosition blockPosition = new BlockPosition(block.getX(), block.getY(), block.getZ());
         World nmsWorld = ((CraftWorld) block.getWorld()).getHandle();
-
         net.minecraft.world.level.chunk.Chunk chunk = nmsWorld.l(blockPosition);
         if (chunk != null) {
             chunk.setBiome(block.getX() >> 2, block.getY() >> 2, block.getZ() >> 2, Holder.a((BiomeBase) nmsBiome.getBiomeBase()));
+        }
+        try {
+            Chunk nmsChunk = ((CraftWorld) block.getLocation().getWorld()).getHandle().l(blockPosition);
+            if (nmsChunk == null) {
+                return;
+            }
+            ClientboundLevelChunkWithLightPacket clientboundLevelChunkWithLightPacket = new ClientboundLevelChunkWithLightPacket(chunk, nmsWorld.l_(), null, null, true);
+            for (Player player : Bukkit.getOnlinePlayers()){
+                EntityPlayer entityPlayer = ((CraftPlayer)player).getHandle();
+                Field field = entityPlayer.getClass().getDeclaredField("b");
+                field.setAccessible(true);
+                PlayerConnection playerConnection = (PlayerConnection) field.get(entityPlayer);
+                playerConnection.a(clientboundLevelChunkWithLightPacket);
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
@@ -123,7 +144,21 @@ public class NmsServer_1_18_2 implements NmsServer {
 
     @Override
     public void registerBiome(Object biomeBase, Object biomeMinecraftKey) {
+        try {
+            Field frozen = RegistryMaterials.class.getDeclaredField("bL");
+            frozen.setAccessible(true);
+            frozen.set(((CraftServer) Bukkit.getServer()).getServer().aU().d(IRegistry.aP), false);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         this.biomeRegistry.a(biomeRegistry, (ResourceKey<BiomeBase>) biomeMinecraftKey, (BiomeBase) biomeBase);
+        try {
+            Field frozen = RegistryMaterials.class.getDeclaredField("bL");
+            frozen.setAccessible(true);
+            frozen.set(((CraftServer) Bukkit.getServer()).getServer().aU().d(IRegistry.aP), true);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 }
