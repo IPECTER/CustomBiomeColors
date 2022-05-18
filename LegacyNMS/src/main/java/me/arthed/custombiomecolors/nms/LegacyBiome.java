@@ -1,11 +1,15 @@
 package me.arthed.custombiomecolors.nms;
 
+import com.mojang.serialization.Codec;
 import me.arthed.nms.NmsBiome;
 import me.arthed.nms.NmsPackets;
 import me.arthed.nms.NmsServer;
 import me.arthed.nms.Util;
 import me.arthed.nms.objects.BiomeColors;
 import me.arthed.nms.objects.BiomeKey;
+import net.minecraft.server.v1_16_R1.BiomeFog;
+import net.minecraft.server.v1_16_R2.BiomeBase;
+import net.minecraft.server.v1_16_R2.BiomeFog;
 import net.minecraft.server.v1_16_R3.BiomeBase;
 import net.minecraft.server.v1_16_R3.BiomeFog;
 import org.bukkit.Bukkit;
@@ -44,6 +48,7 @@ public class LegacyBiome implements NmsBiome {
     }
 
     private final BiomeBase biomeBase;
+    .;
 
     public LegacyBiome(BiomeBase biomeBase) {
         this.biomeBase = biomeBase;
@@ -57,16 +62,19 @@ public class LegacyBiome implements NmsBiome {
     @Override
     public BiomeColors getBiomeColors() {
         try {
-            BiomeFog biomeFog = (BiomeFog) ReflectionUtils.getPrivateObject(this.biomeBase, "p");
-            assert biomeFog != null;
-            return new BiomeColors()
-                    .setGrassColor(ReflectionUtils.getPrivateOptionalInteger(biomeFog, "g"))
-                    .setFoliageColor(ReflectionUtils.getPrivateOptionalInteger(biomeFog, "f"))
-                    .setWaterColor(ReflectionUtils.getPrivateInteger(biomeFog, "c"))
-                    .setWaterFogColor(ReflectionUtils.getPrivateInteger(biomeFog, "d"))
-                    .setSkyColor(ReflectionUtils.getPrivateInteger(biomeFog, "e"))
-                    .setFogColor(ReflectionUtils.getPrivateInteger(biomeFog, "b"));
-        } catch(NoSuchFieldException exception) {
+            BiomeFog biomeFog = (BiomeFog)Util.findField(this.biomeBase.getClass(), BiomeFog.class).get(null);
+            assert biomeFog != null;{
+                Codec codec = (Codec) Util.findField(biomeFog.getClass(), Codec.class).get(null);
+                return new BiomeColors()
+                        .setGrassColor(Util.findField(codec.getClass(), codec.))
+                        .setFoliageColor(ReflectionUtils.getPrivateOptionalInteger(biomeFog., "f"))
+                        .setWaterColor(ReflectionUtils.getPrivateInteger(biomeFog., "c"))
+                        .setWaterFogColor(ReflectionUtils.getPrivateInteger(biomeFog., "d"))
+                        .setSkyColor(ReflectionUtils.getPrivateInteger(biomeFog., "e"))
+                        .setFogColor(ReflectionUtils.getPrivateInteger(biomeFog., "b"));
+            }
+
+        } catch(NoSuchFieldException | IllegalAccessException exception) {
             exception.printStackTrace();
         }
         return null;

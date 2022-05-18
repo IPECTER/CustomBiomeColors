@@ -45,7 +45,13 @@ public class Util {
 
         throw new RuntimeException(new NoSuchMethodException("Method with parameters " + Arrays.stream(parameters).collect(Collectors.toList()) + " not found in class '" + clazz + "'"));
     }
-
+    private static Field getField(Class<?> clazz, String name) {
+        try {
+            return clazz.getField(name);
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public static Field findField(Class<?> clazz, Class<?> type) {
         for (Field f : clazz.getFields()) {
             if (f.getType().equals(type)) {
