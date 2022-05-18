@@ -1,4 +1,4 @@
-package me.arthed.custombiomecolors.utils.objects;
+package me.arthed.nms.objects;
 
 public enum BiomeColorType {
 
