@@ -1,0 +1,19 @@
+plugins {
+    id 'application'
+}
+
+group = 'me.arthed'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(":utils")
+    compileOnly fileTree(dir: 'lib', include: ['*.jar'])
+}
+
+task prepareKotlinBuildScriptModel {
+
+}

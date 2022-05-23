@@ -10,8 +10,9 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'org.spigotmc:spigot:1.17.1-R0.1-SNAPSHOT'
+    implementation 'org.jetbrains:annotations:16.0.2'
     implementation project(":utils")
+    compileOnly fileTree(dir: 'lib', include: ['*.jar'])
 }
 
 task prepareKotlinBuildScriptModel {

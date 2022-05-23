@@ -18,16 +18,14 @@ repositories {
 mainClassName = '...'
 dependencies {
     implementation 'org.jetbrains:annotations:16.0.2'
-    implementation project(':utils')
-    implementation project(':1_16')
-    implementation project(':1_17')
-    implementation project(':1_18')
-    implementation project(':1_18_2')
+    implementation project(':NMS:utils')
+    implementation project(':NMS:16_R2')
+    implementation project(':NMS:16_R3')
+    implementation project(':NMS:17_R1')
+    implementation project(':NMS:18_R1')
+    implementation project(':NMS:18_R2')
     compileOnly 'org.spigotmc:spigot-api:1.17.1-R0.1-SNAPSHOT'
     compileOnly 'com.sk89q.worldedit:worldedit-bukkit:7.2.0'
 }
 
-task prepareKotlinBuildScriptModel {
-
-}
 
