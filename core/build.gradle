@@ -1,0 +1,34 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
+
+group = 'me.arthed'
+version = '1.2.0'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven {
+        name = 'worldedit-repo'
+        url = 'https://maven.enginehub.org/repo/'
+    }
+}
+mainClassName = '...'
+dependencies {
+    implementation 'org.jetbrains:annotations:16.0.2'
+    implementation project(':utils')
+    implementation project(':1_16_R3')
+    implementation project(':1_17_R1')
+    implementation project(':1_18_R1')
+    implementation project(':1_18_R2')
+    implementation project(':1_19_R1')
+    compileOnly 'org.spigotmc:spigot-api:1.17.1-R0.1-SNAPSHOT'
+    compileOnly 'com.sk89q.worldedit:worldedit-bukkit:7.2.0'
+}
+
+task prepareKotlinBuildScriptModel {
+
+}
+
