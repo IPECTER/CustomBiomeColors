@@ -67,8 +67,6 @@ public class SetBiomeColorCommand implements CommandExecutor, TabExecutor {
                 } else {
                     CustomBiomeColors.getInstance().getBiomeManager().changeBiomeColor(blocks, this.colorType, color, runWhenDone);
                 }
-
-                sender.sendMessage(ChatColor.GRAY + "Changing the biome of " + blocks.length + " blocks... (Only 1.18+)");
                 if (blocks.length > 200000)
                     sender.sendMessage(ChatColor.GRAY + "This might take a while.");
 

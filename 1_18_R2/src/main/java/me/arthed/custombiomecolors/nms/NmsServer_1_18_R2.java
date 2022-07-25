@@ -6,11 +6,8 @@ import net.minecraft.core.BlockPosition;
 import net.minecraft.core.Holder;
 import net.minecraft.core.IRegistry;
 import net.minecraft.core.RegistryMaterials;
-import net.minecraft.network.protocol.game.ClientboundLevelChunkWithLightPacket;
 import net.minecraft.resources.MinecraftKey;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.server.level.EntityPlayer;
-import net.minecraft.server.network.PlayerConnection;
 import net.minecraft.world.level.World;
 import net.minecraft.world.level.biome.BiomeBase;
 import net.minecraft.world.level.biome.BiomeFog;
@@ -21,8 +18,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_18_R2.CraftServer;
 import org.bukkit.craftbukkit.v1_18_R2.CraftWorld;
-import org.bukkit.craftbukkit.v1_18_R2.entity.CraftPlayer;
-import org.bukkit.entity.Player;
 
 import java.lang.reflect.Field;
 
@@ -106,28 +101,8 @@ public class NmsServer_1_18_R2 implements NmsServer {
         Chunk chunk = nmsWorld.l(blockPosition);
         if (chunk != null) {
             chunk.setBiome(block.getX() >> 2, block.getY() >> 2, block.getZ() >> 2, Holder.a((BiomeBase) nmsBiome.getBiomeBase()));
-            sendChunkChange(chunk);
         }
 
-    }
-
-    private void sendChunkChange(Chunk chunk) {
-        try {
-            if (chunk == null) {
-                return;
-            }
-            ClientboundLevelChunkWithLightPacket clientboundLevelChunkWithLightPacket = new ClientboundLevelChunkWithLightPacket(chunk, chunk.D().l_(), null, null, true);
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
-                Field field = entityPlayer.getClass().getDeclaredField("b");
-                field.setAccessible(true);
-                PlayerConnection playerConnection = (PlayerConnection) field.get(entityPlayer);
-                playerConnection.a(clientboundLevelChunkWithLightPacket);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
